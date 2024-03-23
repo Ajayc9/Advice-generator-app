@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Advice generator app</title>
+
+  <style>
+    body {
+      font-size: 22px;
+      background-color: hsl(218, 23%, 16%);
+      color: white;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+    }
+
+    .card {
+      background-color: hsl(217, 19%, 24%);
+      padding: 35px;
+      border-radius: 10px;
+      height: 200px;
+      width: 400px;
+
+    }
+
+    .lines {
+      position: relative;
+      top: 25px;
+    }
+
+    /* .dice-button {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.8);
+  background:  hsl(150, 100%, 66%);
+  padding: 15px 40px;
+  border-radius: 4px;
+  font-weight: normal;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+} */
+
+    .glow-dice-button:hover {
+      color: hsl(150, 100%, 66%);
+      box-shadow: 0px 0px 30px hsl(157, 100%, 80%)
+    }
+
+    .heading-title {
+      color: hsl(150, 100%, 66%);
+      text-align: center;
+      font-size: 12px;
+      margin: 12px;
+      letter-spacing: 8px;
+    }
+
+    .app {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: hsl(218, 23%, 16%);
+      /* width: 1180px;
+      height: 400px; */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 10px;
+    }
+
+    .dice {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      top: 55px;
+    }
+
+    .dice-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      width: 50px;
+      background-color: hsl(150, 100%, 66%);
+      ;
+      border-radius: 50%;
+      border: 1px solid black;
+      cursor: pointer;
+    }
+
+    hr {
+      width: 170px;
+      position: absolute;
+    }
+
+    .hr1 {
+      left: 225px;
+
+    }
+
+    .hr2 {
+
+      right: 225px;
+
+    }
+
+ 
+
+    .content {
+      text-align: center;
+      height: 98px;
+    }
+
+    .vrticle-con {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .v {
+      height: 16px;
+      width: 6px;
+      border-radius: 5px;
+      background: white;
+
+    }
+
+    @media only screen and (max-width: 600px) {
+
+      .heading-title {
+        color: hsl(150, 100%, 66%);
+        text-align: center;
+        font-size: 12px;
+        margin: 12px;
+        letter-spacing: 4px;
+      }
+
+      .app {
+        /* display: flex; */
+        position: absolute;
+    top: 45%;
+    left: 45%;
+    transform: translate(-45%, -45%);
+    padding: 10px;
+}
+
+      
+      .lines {
+        position: relative;
+        top: 40px;
+      }
+      body {
+      font-size: 16px;
+    }
+
+      hr {
+        width: 90px;
+        position: absolute;
+      }
+
+      .hr1 {
+        left: 160px;
+
+      }
+
+      .hr2 {
+
+        right: 160px;
+
+      }
+
+      .card {
+        background-color: hsl(217, 19%, 24%);
+        padding: 35px;
+        border-radius: 10px;
+        height: 200px;
+        width: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Advice ID goes here -->
+  <!-- 
+  "Advice text goes here -->
+  <div class="app">
+    <div class="container">
+      <div class="card">
+        <div class="heading-title" id="heading">A D V I C E # 1 1 7</div>
+        <div class="content" id="advice">
+          &nbsp;&nbsp; &nbsp;&nbsp; “It is easy to sit up and and take</br>
+          notice, what's difficult is getting </br>
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; up and taking action.”
+        </div>
+        <div class="lines">
+
+          <span class="line">
+            <span class="vrticle-con">
+              <hr class="hr1">
+              <span class="v"></span><span class="v"></span>
+              <hr class="hr2">
+            </span>
+          </span>
+        </div>
+        <div class="dice ">
+          <span class="dice-img dice-button glow-dice-button" id="dbtn"><img src="./images/icon-dice.svg" alt=""></span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const cardContent = document.querySelector("#advice")
+    const contentId = document.querySelector("#heading")
+    const dice = document.querySelector("#dbtn")
+    const advicesApi = 'https://api.adviceslip.com/advice'
+    dice.addEventListener("click", function () {
+      getData(advicesApi)
+    })
+
+    async function getData(advicesApi) {
+      const contentObject = await fetch(advicesApi)
+      const contentObjectData = await contentObject.json()
+      const advice = contentObjectData?.slip?.advice
+      const adviceId = contentObjectData?.slip?.id
+      cardContent.innerHTML = advice
+      contentId.innerHTML = `ADVICE #${adviceId}`
+
+    }
+
+
+
+  </script>
+
+</body>
+
+</html>
